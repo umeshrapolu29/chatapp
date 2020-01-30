@@ -14,7 +14,7 @@ const client = require('socket.io')(server)
  //app.set('view engine', 'html')
  //app.use(express.static(__dirname + './'));
     app.get('/', (req, res) => {
-        res.send("Hello World")
+        res.sendFile(path.join(__dirname+'./index.html'));
     })
 
     
