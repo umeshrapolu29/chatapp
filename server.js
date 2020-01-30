@@ -55,23 +55,23 @@ mongoose.connect(url, function(err, db){
             let message = data.message;
             console.log(name,message);
 
-            // Check for name and message
-            // if(name == '' || message == ''){
-            //     // Send error status
-            //     sendStatus('Please enter a name and message');
-            // } else {
-            //     // Insert message
-            //     chat.insert({name: name, message: message}, function(){
-            //         client.emit('output', [data]);
-            //         console.log(data);
+           // Check for name and message
+            if(name == '' || message == ''){
+                // Send error status
+                sendStatus('Please enter a name and message');
+            } else {
+                // // Insert message
+                // chat.insert({name: name, message: message}, function(){
+                //     client.emit('output', [data]);
+                //     console.log(data);
 
-            //         // Send status object
-            //         sendStatus({
-            //             message: 'Message sent',
-            //             clear: true
-            //         });
-            //     });
-            // }
+                    // Send status object
+                    sendStatus({
+                        message: 'Message sent',
+                        clear: true
+                    });
+                // });
+            }
         });
         
  
