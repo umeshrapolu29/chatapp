@@ -70,7 +70,7 @@ mongoose.connect(url, function(err, db){
                         message: 'Message sent',
                         clear: true
                     });
-                // });
+                 });
             }
         });
         
