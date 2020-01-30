@@ -1,8 +1,26 @@
 const mongo = require('mongodb').MongoClient;
-const client = require('socket.io').listen(4000).sockets;
+const express = require('express')
+const app = express()
+var mongoose=require('mongoose');
+server = app.listen(4000)
+var db=require('./Database/db');
+var url=db.url
+
+const client = require('socket.io')(server)
+
+//Listen on port 3000
+
+
+ //app.set('view engine', 'html')
+ //app.use(express.static(__dirname + './'));
+    app.get('/', (req, res) => {
+    })
+
+    
+    
 
 // Connect to mongo
-mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
+mongoose.connect(url, function(err, db){
     if(err){
         throw err;
     }
@@ -41,6 +59,7 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
                 // Insert message
                 chat.insert({name: name, message: message}, function(){
                     client.emit('output', [data]);
+                    console.log(data);
 
                     // Send status object
                     sendStatus({
@@ -50,6 +69,8 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
                 });
             }
         });
+        
+ 
 
         // Handle clear
         socket.on('clear', function(data){
@@ -60,4 +81,6 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
             });
         });
     });
+   
 });
+

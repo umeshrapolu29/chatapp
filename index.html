@@ -64,7 +64,7 @@
             }
 
             // Connect to socket.io
-            var socket = io.connect('http://127.0.0.1:4000');
+            var socket = io.connect('http://localhost:4000');
 
             // Check for connection
             if(socket !== undefined){
@@ -76,6 +76,7 @@
                     if(data.length){
                         for(var x = 0;x < data.length;x++){
                             // Build out message div
+                            console.log("socket")
                             var message = document.createElement('div');
                             message.setAttribute('class', 'chat-message');
                             message.textContent = data[x].name+": "+data[x].message;
