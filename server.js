@@ -49,29 +49,29 @@ mongoose.connect(url, function(err, db){
             socket.emit('output', res);
         });
 
-        Handle input events
-        socket.on('input', function(data){
-            let name = data.name;
-            let message = data.message;
+        // Handle input events
+        // socket.on('input', function(data){
+        //     let name = data.name;
+        //     let message = data.message;
 
-            // Check for name and message
-            if(name == '' || message == ''){
-                // Send error status
-                sendStatus('Please enter a name and message');
-            } else {
-                // Insert message
-                chat.insert({name: name, message: message}, function(){
-                    client.emit('output', [data]);
-                    console.log(data);
+        //     // Check for name and message
+        //     if(name == '' || message == ''){
+        //         // Send error status
+        //         sendStatus('Please enter a name and message');
+        //     } else {
+        //         // Insert message
+        //         chat.insert({name: name, message: message}, function(){
+        //             client.emit('output', [data]);
+        //             console.log(data);
 
-                    // Send status object
-                    sendStatus({
-                        message: 'Message sent',
-                        clear: true
-                    });
-                });
-            }
-        });
+        //             // Send status object
+        //             sendStatus({
+        //                 message: 'Message sent',
+        //                 clear: true
+        //             });
+        //         });
+        //     }
+        // });
         
  
 
