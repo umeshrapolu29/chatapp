@@ -1,8 +1,9 @@
 const mongo = require('mongodb').MongoClient;
 const express = require('express')
+var port=process.env.PORT||4000
 const app = express()
 var mongoose=require('mongoose');
-server = app.listen(4000)
+server = app.listen(port)
 var db=require('./Database/db');
 var url=db.url
 
