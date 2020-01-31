@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <title>MongoChat</title>
     <style>
-        #messages{height:300px;}
+        #messages{height:300px; overflow: auto;}
     </style>
 </head>
 <body>
@@ -22,9 +22,8 @@
                 <div id="chat">
                     <input type="text" id="username" class="form-control" placeholder="Enter Your Name...">
                     <br>
-                    <div class="card overflow-auto">
-                        <div id="messages" class="card-block">
-
+                    <div class="" id="msgBox">
+                        <div id="messages" class="card-block"></div>
                         </div>
                     </div>
                     <br>
