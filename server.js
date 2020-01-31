@@ -61,9 +61,9 @@ mongoose.connect(url, function(err, db){
                 sendStatus('Please enter a name and message');
             } else {
                 // // Insert message
-                // chat.insert({name: name, message: message}, function(){
-                //     client.emit('output', [data]);
-                //     console.log(data);
+                chat.insert({name: name, message: message}, function(){
+                    client.emit('output', [data]);
+                    console.log(data);
 // 
                     // Send status object
                     sendStatus({
