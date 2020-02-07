@@ -1,24 +1,48 @@
 const mongo = require('mongodb').MongoClient;
-const express = require('express') 
+const express = require('express');
+// const route=express.Router();
 const app = express()
 var mongoose=require('mongoose');
+var Schema=require('./Model/Schema');
 server = app.listen(process.env.PORT || 4000)
 var db=require('./Database/db');
+var multer=require('multer');
 var url=db.url
+// app.use(app.router);
 
 const client = require('socket.io')(server)
+var storage=multer.diskStorage({
+    destination:function(req,file,cb){
+        cb(null,'./uploads/images');
+    },
+     filename:function(req,file,cb){
+        // console.log(new Date().getMinutes+"time before");
+         var file=file.originalname;
+        cb(null,file);
+        console.log(file+"file name is");
+  
+    }
+});
+var upload=multer({storage:storage});
 
 //Listen on port 3000
 
 
- //app.set('view engine', 'html')
- //app.use(express.static(__dirname + './'));
+
     app.get('/', (req, res) => {
     //  res.sendFile(path.join(__dirname+'./index.html'));
         // res.send("helo")
         res.sendFile('./index.html', {root: __dirname })
     })
+    var register=require('./Routes/register');{
+        app.use('/register',register);
+    }
 
+    
+
+
+
+ 
     
     
 
@@ -29,18 +53,23 @@ mongoose.connect(url, function(err, db){
     }
 
     console.log('MongoDB connected...');
+    let id=0;
 
     // Connect to Socket.io
     client.on('connection', function(socket){
-        let chat = db.collection('chats');
+        let chat = db.collection('chatbot');
 
-        // Create function to send status
+        // Create function to send 
+        // io.on('connection', function(socket) {
+        //     socket.on('message', function(msg) {
+        //       io.emit('message', msg);
+        //     });
         sendStatus = function(s){
             socket.emit('status', s);
         }
 
         // Get chats from mongo collection
-        chat.find().limit(100).sort({_id:1}).toArray(function(err, res){
+        chat.find().limit(100).sort({_id:-1}).toArray(function(err, res){
             if(err){
                 throw err;
             }
@@ -53,7 +82,9 @@ mongoose.connect(url, function(err, db){
         socket.on('input', function(data){
             let name = data.name;
             let message = data.message;
-            console.log(name,message);
+           
+            let id1=id++
+            console.log(name,message,id1);
 
            // Check for name and message
             if(name == '' || message == ''){
@@ -61,9 +92,15 @@ mongoose.connect(url, function(err, db){
                 sendStatus('Please enter a name and message');
             } else {
                 // // Insert message
-                chat.insert({name: name, message: message}, function(){
-                    client.emit('output', [data]);
-                    console.log(data);
+                chat.insert({name: name, message: message,id1: id1}, function(){
+
+                    
+                 client.emit('output', [data]);
+                     console.log(data);
+                    // chat.find({message:{$ne : null}}),function(){
+                    //     client.emit('output', [data]);
+                    //     console.log(data);
+                    // }
 // 
                     // Send status object
                     sendStatus({
