@@ -1,4 +1,4 @@
-const mongo = require('mongodb').MongoClient;
+
 const express = require('express');
 // const route=express.Router();
 const app = express()
@@ -8,6 +8,20 @@ server = app.listen(process.env.PORT || 4000)
 var db=require('./Database/db');
 var multer=require('multer');
 var url=db.url
+var bodyparser=require('body-parser');
+app.use(express.static(__dirname+'/uploads'))
+app.use(bodyparser.urlencoded({extended:true}))
+app.use(bodyparser.json())
+app.use((req,res,next)=>{
+  res.header('Access-Control-Allow-Origin','*');
+  res.header('Access-Control-Allow-Headers','Origin,X-Requested-With,Content-Type,Accept,Authoriuzation');
+  if(req.method==='OPTIONS'){
+      res.header('Access-Control-Allow-Methods','PUT,POST,DELETE,PATCH,GET')
+      return res.status(200).json({});
+  }
+  next();
+
+})
 // app.use(app.router);
 
 const client = require('socket.io')(server)
